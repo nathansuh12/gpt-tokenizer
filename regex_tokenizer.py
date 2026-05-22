@@ -83,3 +83,24 @@ class RegexTokenizer():
             encoded_ids.extend(chunk_ids)
 
         return encoded_ids
+    
+if __name__ == "__main__":
+    with open("taylorswift.txt", "r", encoding = "utf-8") as f:
+        text = f.read()
+        
+    tokenizer = RegexTokenizer()
+    tokenizer.train(text, vocab_size=276, verbose=False)
+
+    lines = []
+
+    lines.append("\n# Full Vocab\n")
+    for idx, token_bytes in tokenizer.vocab.items():
+        token_str = token_bytes.decode('utf-8', errors='replace')
+        if idx in tokenizer.merges.values():
+            pair = next(p for p, i in tokenizer.merges.items() if i == idx)
+            lines.append(f"{idx}: `{token_str}` (merged from {pair[0]} + {pair[1]})\n")
+        else:
+            lines.append(f"{idx}: `{token_str}`\n")
+
+    with open("tests/test2.md", "w", encoding="utf-8") as f:
+        f.writelines(lines)

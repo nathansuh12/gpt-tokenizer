@@ -69,6 +69,9 @@ class BasicTokenizer():
 
 
 if __name__ == "__main__":
+    with open("taylorswift.txt", "r", encoding = "utf-8") as f:
+        text = f.read()
+    
     tokenizer = BasicTokenizer()
     tokenizer.train(text, vocab_size=276, verbose=False)
 
@@ -83,5 +86,5 @@ if __name__ == "__main__":
         else:
             lines.append(f"{idx}: `{token_str}`\n")
 
-    with open("test.md", "w", encoding="utf-8") as f:
+    with open("tests/test.md", "w", encoding="utf-8") as f:
         f.writelines(lines)
