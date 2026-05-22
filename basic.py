@@ -1,9 +1,4 @@
-with open("taylorswift.txt", "r", encoding = "utf-8") as f:
-    text = f.read()
-tokens = text.encode('utf-8')
-tokens = list(map(int, tokens))
-
-def get_stats(ids):
+def get_stats(ids, counts = None):
     counts = {}
 
     for pair in zip(ids, ids[1:]):
@@ -25,14 +20,6 @@ def merge(ids, pair, idx):
 
     return new_ids
 
-''' test merge and get_stats functions
-
-    stats = get_stats(tokens)
-    top_pair = max(stats, key=stats.get)
-    tokens2 = merge(tokens, top_pair, 256)
-    print(top_pair)
-    
-    '''
 
 class BasicTokenizer():
     def __init__(self):
@@ -78,6 +65,7 @@ class BasicTokenizer():
             tokens = merge(tokens, pair, idx)
 
         return tokens
+
 
 
 if __name__ == "__main__":

@@ -1,7 +1,8 @@
 import os
 import pytest
 
-from exercise import BasicTokenizer
+from basic import BasicTokenizer
+from regex_tokenizer import RegexTokenizer
 
 test_strings = [
     "", # empty string
@@ -20,7 +21,7 @@ def unpack(text):
     else:
         return text
     
-@pytest.mark.parametrize("tokenizer_factory", [BasicTokenizer])
+@pytest.mark.parametrize("tokenizer_factory", [BasicTokenizer, RegexTokenizer])
 @pytest.mark.parametrize("text", test_strings)
 def test_encode_decode_identity(tokenizer_factory, text):
     text = unpack(text)
@@ -28,6 +29,7 @@ def test_encode_decode_identity(tokenizer_factory, text):
     ids = tokenizer.encode(text)
     decoded = tokenizer.decode(ids)
     assert text == decoded
+
 
 if __name__ == "__main__":
     pytest.main()
